@@ -3,7 +3,6 @@ import { Suspense, useEffect } from "react";
 import Feed from "../components/Feed";
 import Headers from "../components/Headers";
 import { PostinganPopup, UploadImgPopup } from "../components/Model";
-import { useSelector } from "react-redux";
 
 export default function Home() {
     // const currentComments = useSelector((state) => state.Comments);
