@@ -288,12 +288,12 @@ export const PostinganPopup = () => {
 
     return (
         <TamplateDialog open={open} setOpen={setOpen}>
-            <div className="inline-flex justify-between bg-white  text-left overflow-hidden shadow-xl transform transition-all  sm:align-middle sm:max-w-[70rem] sm:w-full relative ">
+            <div className="inline-flex mt-[5rem] md:mt-0 flex-col md:flex-row justify-between bg-white  text-left overflow-hidden shadow-xl transform transition-all  sm:align-middle sm:max-w-[70rem] sm:w-full relative ">
                 <div className=" w-full bg-black">
                     <img
                         src={dataId?.img}
                         alt=""
-                        className=" h-[35rem] w-full object-contain"
+                        className=" h-[35rem] w-full object-contain md:inline-block hidden"
                         onClick={(e) => handleLike(e)}
                     />
                 </div>
@@ -303,7 +303,7 @@ export const PostinganPopup = () => {
                         <img
                             src={dataId?.userImg}
                             alt=""
-                            className="rounded-full h-10 w-10 object-contain border p-[2px] mr-3"
+                            className="rounded-full h-10 w-10 object-contain border p-[2px] mr-3 "
                         />
                         <div className="flex-1 mx-1 flex items-center pb-2 text-sm">
                             <h2 className="font-semibold">

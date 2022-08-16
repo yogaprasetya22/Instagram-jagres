@@ -3,6 +3,7 @@ import { Suspense, useEffect } from "react";
 import Feed from "../components/Feed";
 import Headers from "../components/Headers";
 import { PostinganPopup, UploadImgPopup } from "../components/Model";
+import NavMobile from "../components/NavMobile";
 
 export default function Home() {
     return (
@@ -28,6 +29,7 @@ export default function Home() {
             {/* model */}
             <UploadImgPopup />
             <PostinganPopup />
+            <NavMobile />
         </div>
     );
 }

@@ -62,7 +62,7 @@ const Headers = () => {
                         onClick={() => router.push("/")}
                         className="navBtn "
                     />
-                    <MenuIcon className="h-6 md:hidden cursor-pointer" />
+                    {/* <MenuIcon className="h-6 md:hidden cursor-pointer" /> */}
                     {!session ? (
                         <button onClick={signIn}>Sign In</button>
                     ) : (
@@ -83,8 +83,14 @@ const Headers = () => {
                                 onClick={signOut}
                                 src={session?.user.image}
                                 layout="fill"
-                                className="h-7 rounded-full cursor-pointer"
+                                className="h-7 rounded-full cursor-pointer md:inline-block hidden"
                             />
+                            <div className=" relative md:hidden inline-block">
+                                <PaperAirplaneIcon className="h-7 w-7 rotate-90" />
+                                <div className="absolute -top-2 -right-1 text-xs w-4 h-4 bg-red-500 text-white rounded-full animate-pulse">
+                                    3
+                                </div>
+                            </div>
                         </>
                     )}
                 </div>
