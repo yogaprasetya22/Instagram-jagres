@@ -5,32 +5,6 @@ import Headers from "../components/Headers";
 import { PostinganPopup, UploadImgPopup } from "../components/Model";
 
 export default function Home() {
-    // const currentComments = useSelector((state) => state.Comments);
-    // useEffect(() => {
-    //     console.log(currentComments);
-    // }, [currentComments]);
-    const datas = {
-        data: [
-            {
-                comment: "kontol kontol kontol kontol jontol kontol",
-                profile:
-                    "https://lh3.googleusercontent.com/a/AItbvmkm85vaLACq2sfUPFoLZNWDi2C2woTgmO_UWb4W=s96-c",
-                username: "YogaprasetyaUye",
-            },
-            {
-                comment: "ngentoooot",
-                profile:
-                    "https://lh3.googleusercontent.com/a/AItbvmkm85vaLACq2sfUPFoLZNWDi2C2woTgmO_UWb4W=s96-c",
-                username: "YogaprasetyaUye",
-            },
-            {
-                comment: "konz",
-                profile:
-                    "https://lh3.googleusercontent.com/a/AItbvmkm85vaLACq2sfUPFoLZNWDi2C2woTgmO_UWb4W=s96-c",
-                username: "YogaprasetyaUye",
-            },
-        ],
-    };
     return (
         <div className=" h-screen bg-gray-50 overflow-auto">
             <Head>
