@@ -10,6 +10,7 @@ import {
     BookmarkIcon,
     CameraIcon,
     ChatIcon,
+    DotsCircleHorizontalIcon,
     DotsHorizontalIcon,
     EmojiHappyIcon,
     HeartIcon,
@@ -33,7 +34,7 @@ import {
 import { useSession } from "next-auth/react";
 import { ref, getDownloadURL, uploadString } from "firebase/storage";
 import Moment from "react-moment";
-import { ExamplePosts } from "./DropDown";
+import { ExampleComment, ExamplePosts } from "./DropDown";
 
 const TamplateDialog = ({ children, open, setOpen }) => (
     <Transition.Root show={open} as={Fragment}>
@@ -54,7 +55,7 @@ const TamplateDialog = ({ children, open, setOpen }) => (
                 >
                     <Dialog.Overlay
                         className={
-                            "fixed inset-0 bg-gray-700 bg-opacity-30 transition-opacity"
+                            "fixed inset-0 bg-gray-700 bg-opacity-50 transition-opacity"
                         }
                     />
                 </Transition.Child>
@@ -199,10 +200,10 @@ export const PostinganPopup = () => {
     const [open, setOpen] = useRecoilState(modalComments);
     const dataId = useRecoilValue(modalDataCommentsId);
     const [commets, setComments] = useState([]);
-    const [likes, setLikes] = useState([]);
-    const [haslike, setHaslike] = useState(false);
     const { data: session } = useSession();
     const [comment, setComment] = useState("");
+    const [likes, setLikes] = useState([]);
+    const [haslike, setHaslike] = useState(false);
 
     // TODO: Likesss
     useEffect(() => {
@@ -221,6 +222,21 @@ export const PostinganPopup = () => {
             likes.findIndex((like) => like.id === session?.user.uid) !== -1
         );
     }, [likes]);
+
+    const handleLike = async (e) => {
+        switch (e.detail) {
+            case 2: {
+                if (dataId.id) {
+                    await setDoc(
+                        doc(db, "posts", dataId.id, "likes", session.user.uid),
+                        {
+                            username: session.user.username,
+                        }
+                    );
+                }
+            }
+        }
+    };
 
     const likesPost = async () => {
         if (dataId.id) {
@@ -242,20 +258,6 @@ export const PostinganPopup = () => {
         }
     };
 
-    const handleLike = async (e) => {
-        switch (e.detail) {
-            case 2: {
-                if (dataId.id) {
-                    await setDoc(
-                        doc(db, "posts", dataId.id, "likes", session.user.uid),
-                        {
-                            username: session.user.username,
-                        }
-                    );
-                }
-            }
-        }
-    };
     // TODO: Comments
     useEffect(() => {
         if (dataId) {
@@ -271,18 +273,18 @@ export const PostinganPopup = () => {
         }
     }, [db, dataId]);
 
-     const sendComment = async (e) => {
-         e.preventDefault();
-         const commentToSend = comment;
-         setComment("");
+    const sendComment = async (e) => {
+        e.preventDefault();
+        const commentToSend = comment;
+        setComment("");
 
-         await addDoc(collection(db, "posts", dataId.id, "comments"), {
-             comment: commentToSend,
-             username: session.user.username,
-             profile: session.user.image,
-             timestamp: serverTimestamp(),
-         });
-     };
+        await addDoc(collection(db, "posts", dataId.id, "comments"), {
+            comment: commentToSend,
+            username: session.user.username,
+            profile: session.user.image,
+            timestamp: serverTimestamp(),
+        });
+    };
 
     return (
         <TamplateDialog open={open} setOpen={setOpen}>
@@ -321,7 +323,7 @@ export const PostinganPopup = () => {
                     </div>
                     {/* middle */}
                     <div>
-                        <div className="flex items-center justify-between py-3 z-40 bg-white">
+                        <div className="flex items-center justify-between py-3 z-40 bg-white ">
                             <div className="flex-1 mx-1 flex items-start pb-2 text-sm flex-col">
                                 <div className="text-start px-2 flex mb-4">
                                     <img
@@ -329,36 +331,18 @@ export const PostinganPopup = () => {
                                         alt=""
                                         className="rounded-full h-10 w-10 object-contain border p-[2px] mr-3 "
                                     />
-                                    <p className="mt-2 max-w-[25rem] break-words">
+                                    <p className="mt-2 max-w-[30rem] break-words">
                                         <span className="pr-2 font-semibold text-center">
                                             {dataId?.username}
                                         </span>
                                         {dataId?.caption}
                                     </p>
                                 </div>
-                                {commets?.map((dat, i) => (
-                                    <div
-                                        className="text-start px-2 flex mb-4"
-                                        key={i}
-                                    >
-                                        <img
-                                            src={dat.data().profile}
-                                            alt=""
-                                            className="rounded-full h-10 w-10 object-contain border p-[2px] mr-3 "
-                                        />
-                                        <p className="mt-2 max-w-[25rem] break-words">
-                                            <span className="pr-2 font-semibold text-center">
-                                                {dat.data().username}
-                                            </span>
-                                            {dat.data().comment}
-                                            <br />
-                                            <Moment fromNow>
-                                                {dat.data().timestamp?.seconds *
-                                                    1000}
-                                            </Moment>
-                                        </p>
-                                    </div>
-                                ))}
+                                <CommentHandler
+                                    commets={commets}
+                                    session={session}
+                                    dataId={dataId}
+                                />
                             </div>
                         </div>
                     </div>
@@ -424,5 +408,99 @@ export const PostinganPopup = () => {
                 </div>
             </div>
         </TamplateDialog>
+    );
+};
+
+const CommentHandler = ({ commets, session, dataId }) => {
+    const [likes, setLikes] = useState([]);
+    const [haslike, setHaslike] = useState(false);
+    const [commentsId, setCommentsId] = useState([]);
+
+    return (
+        <>
+            {commets?.map((dat, i) => (
+                <div className="text-start px-2 flex mb-4  w-full" key={i}>
+                    <img
+                        src={dat.data().profile}
+                        alt=""
+                        className="rounded-full h-10 w-10 object-contain border p-[2px] mr-3 "
+                    />
+                    <div className="mt-2 max-w-[28rem] break-words flex-1">
+                        <span className="pr-2 font-semibold text-center">
+                            {dat.data().username}
+                        </span>
+                        {dat.data().comment}
+                        <br />
+                        <div className="flex flex-row space-x-5 font-semibold text-[12px] text-gray-600">
+                            {" "}
+                            <Moment fromNow>
+                                {dat.data().timestamp?.seconds * 1000}
+                            </Moment>
+                            {/* {likeComment.length > 0 && (
+                                <p>
+                                    <span className="text-[14px] text-black">
+                                        {likeComment.length}{" "}
+                                    </span>
+                                    {likeComment.length > 1 ? "likes" : "like"}
+                                </p>
+                            )} */}
+                            <div className="flex items-center pl-1 ">
+                                {session.user.username ===
+                                    dat.data().username && (
+                                    <ExampleComment
+                                        id={dataId?.id}
+                                        username={dataId?.username}
+                                        commentsId={dat?.id}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div className=" flex items-center">
+                        <LikeComments
+                            dataId={dataId.id}
+                            commentsId={dat.id}
+                            setCommentsId={setCommentsId}
+                        />
+                    </div>
+                </div>
+            ))}
+        </>
+    );
+};
+
+const LikeComments = ({ dataId, username, commentsId, setCommentsId }) => {
+    // TODO: Likesss
+    // useEffect(() => {
+    //     if (dataId) {
+    //         onSnapshot(
+    //             collection(
+    //                 db,
+    //                 "posts",
+    //                 dataId,
+    //                 "comments",
+    //                 commentsId,
+    //                 "likes"
+    //             ),
+    //             (snapshot) => {
+    //                 console.log(snapshot.docs);
+    //             }
+    //         );
+    //     }
+    // }, [dataId]);
+
+    // useEffect(() => {
+    //     setHaslike(
+    //         likes.findIndex((like) => like.id === session?.user.uid) !== -1
+    //     );
+    // }, [likes]);
+
+    return (
+        <>
+            <HeartIcon
+                className="btn w-4 h-4"
+                // onClick={() => commentslike(dat?.id)}
+            />
+        </>
     );
 };

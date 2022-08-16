@@ -50,7 +50,7 @@ const Post = ({ username, userImg, img, caption, id }) => {
         setHaslike(
             likes.findIndex((like) => like.id === session?.user.uid) !== -1
         );
-    }, [likes]);
+    }, [likes, session]);
 
     const likesPost = async () => {
         if (haslike) {

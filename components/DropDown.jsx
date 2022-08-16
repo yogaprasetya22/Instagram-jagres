@@ -18,11 +18,10 @@ export function ExamplePosts({ id, username }) {
                 });
             }
             await deleteObject(idStorage);
-            console.log("deleted: ",id);
+            console.log("deleted: ", id);
         } catch (error) {
             console.log(error);
         }
-       
     };
     return (
         <div className=" w-56 text-right">
@@ -152,6 +151,70 @@ export function ExamplePosts({ id, username }) {
         </div>
     );
 }
+
+export const ExampleComment = ({ id, username, commentsId }) => {
+    const { data: session } = useSession();
+    const deletePosts = async () => {
+        try {
+            if (session?.user.username === username) {
+                await deleteDoc(doc(db, "posts", id, "comments", commentsId), {
+                    username: username,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    return (
+        <div className="pt-1">
+            <Menu as="div" className="relative inline-block text-center">
+                <div>
+                    <Menu.Button>
+                        <DotsHorizontalIcon className="h-4 w-4 cursor-pointer" />
+                    </Menu.Button>
+                </div>
+                <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                >
+                    <Menu.Items className="absolute right-0 mt-2 z-50 w-[10rem] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div className="px-1 py-1" onClick={deletePosts}>
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <button
+                                        className={`${
+                                            active
+                                                ? "bg-gray-100 text-black"
+                                                : "text-gray-900"
+                                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                    >
+                                        {active ? (
+                                            <DeleteActiveIcon
+                                                className="mr-2 h-5 w-5 text-gray-100"
+                                                aria-hidden="true"
+                                            />
+                                        ) : (
+                                            <DeleteInactiveIcon
+                                                className="mr-2 h-5 w-5 text-gray-100"
+                                                aria-hidden="true"
+                                            />
+                                        )}
+                                        Delete
+                                    </button>
+                                )}
+                            </Menu.Item>
+                        </div>
+                    </Menu.Items>
+                </Transition>
+            </Menu>
+        </div>
+    );
+};
 
 function EditInactiveIcon(props) {
     return (
