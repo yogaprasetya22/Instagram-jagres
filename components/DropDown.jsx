@@ -153,14 +153,11 @@ export function ExamplePosts({ id, username }) {
 }
 
 export const ExampleComment = ({ id, username, commentsId }) => {
-    const { data: session } = useSession();
     const deletePosts = async () => {
         try {
-            if (session?.user.username === username) {
-                await deleteDoc(doc(db, "posts", id, "comments", commentsId), {
-                    username: username,
-                });
-            }
+            await deleteDoc(doc(db, "posts", id, "comments", commentsId), {
+                username: username,
+            });
         } catch (error) {
             console.log(error);
         }
