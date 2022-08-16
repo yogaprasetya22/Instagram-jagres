@@ -7,7 +7,7 @@ import NavMobile from "../components/NavMobile";
 
 export default function Home() {
     return (
-        <div className=" h-screen bg-gray-50 overflow-auto">
+        <div className=" h-screen bg-gray-50 overflow-auto md:mb-0 mb-[5rem]">
             <Head>
                 <title>Instagram - clone</title>
                 <meta
