@@ -288,7 +288,7 @@ export const PostinganPopup = () => {
 
     return (
         <TamplateDialog open={open} setOpen={setOpen}>
-            <div className="inline-flex mt-[5rem] md:mt-0 flex-col md:flex-row justify-between bg-white  text-left overflow-hidden shadow-xl transform transition-all  sm:align-middle sm:max-w-[70rem] sm:w-full relative ">
+            <div className="inline-flex mt-[2rem] md:mt-0 flex-col md:flex-row justify-between bg-white  text-left overflow-hidden shadow-xl transform transition-all  sm:align-middle sm:max-w-[70rem] sm:w-full relative ">
                 <div className=" w-full bg-black">
                     <img
                         src={dataId?.img}
