@@ -288,7 +288,7 @@ export const PostinganPopup = () => {
 
     return (
         <TamplateDialog open={open} setOpen={setOpen}>
-            <div className="inline-flex mt-[2rem] md:mt-0 flex-col md:flex-row justify-between bg-white  text-left overflow-hidden shadow-xl transform transition-all  sm:align-middle sm:max-w-[70rem] sm:w-full relative ">
+            <div className="inline-flex mt-[1rem] md:mt-0 flex-col md:flex-row justify-between bg-white  text-left overflow-hidden shadow-xl transform transition-all  sm:align-middle sm:max-w-[70rem] sm:w-full relative ">
                 <div className=" w-full bg-black">
                     <img
                         src={dataId?.img}
@@ -297,7 +297,7 @@ export const PostinganPopup = () => {
                         onClick={(e) => handleLike(e)}
                     />
                 </div>
-                <div className="w-full max-w-[35rem] overflow-y-scroll scrollbar-none max-h-[26rem] ">
+                <div className="w-full max-w-[35rem] overflow-y-scroll scrollbar-none md:max-h-[26rem] max-h-[28rem]">
                     {/* top */}
                     <div className="flex items-center justify-between shadow-sm drop-shadow-sm px-4 py-3 sticky top-0 z-40 bg-white">
                         <img
@@ -324,7 +324,7 @@ export const PostinganPopup = () => {
                     {/* middle */}
                     <div>
                         <div className="flex items-center justify-between py-3 z-40 bg-white ">
-                            <div className="flex-1 mx-1 flex items-start pb-2 text-sm flex-col">
+                            <div className="flex-1 mx-1 flex items-start pb-2 text-sm flex-col md:mb-0 mb-[8rem]">
                                 <div className="text-start px-2 flex mb-4">
                                     <img
                                         src={dataId?.userImg}
