@@ -9,10 +9,11 @@ import {
     MenuIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
+import { ExampleProfile } from "./DropDown";
 
 const Headers = () => {
     const { data: session } = useSession();
@@ -62,7 +63,6 @@ const Headers = () => {
                         onClick={() => router.push("/")}
                         className="navBtn "
                     />
-                    {/* <MenuIcon className="h-6 md:hidden cursor-pointer" /> */}
                     {!session ? (
                         <button onClick={signIn}>Sign In</button>
                     ) : (
@@ -78,13 +78,7 @@ const Headers = () => {
                                 className="navBtn"
                             />
                             <UserGroupIcon className="navBtn" />
-                            <HeartIcon className="navBtn" />
-                            <img
-                                onClick={signOut}
-                                src={session?.user.image}
-                                layout="fill"
-                                className="h-7 rounded-full cursor-pointer md:inline-block hidden"
-                            />
+                            <ExampleProfile session={session} />
                             <div className=" relative md:hidden inline-block">
                                 <PaperAirplaneIcon className="h-7 w-7 rotate-90" />
                                 <div className="absolute -top-2 -right-1 text-xs w-4 h-4 bg-red-500 text-white rounded-full animate-pulse">

@@ -15,20 +15,20 @@ const NavMobile = () => {
                 {" "}
                 <HomeIcon
                     onClick={() => router.push("/")}
-                    className="h-10 w-10 cursor-pointer "
+                    className="h-8 w-8 cursor-pointer "
                 />
             </div>
             <div>
                 <PlusCircleIcon
                     onClick={() => setOpen(true)}
-                    className="h-10 w-10 cursor-pointer"
+                    className="h-8 w-8 cursor-pointer"
                 />
             </div>
             <div>
                 <img
                     src={session?.user.image}
                     layout="fill"
-                    className="h-10 w-10 cursor-pointer rounded-full "
+                    className="h-8 w-8 cursor-pointer rounded-full "
                 />
             </div>
         </div>

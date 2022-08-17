@@ -29,6 +29,7 @@ import {
 import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
 import { ExamplePosts } from "./DropDown";
+import Emoji from "./Emoji";
 
 const Post = ({ username, userImg, img, caption, id }) => {
     const { data: session } = useSession();
@@ -38,6 +39,11 @@ const Post = ({ username, userImg, img, caption, id }) => {
     const [likes, setLikes] = useState([]);
     const [haslike, setHaslike] = useState(false);
     const [dataComments, setDataComments] = useRecoilState(modalDataCommentsId);
+
+    // TODO: Emoji
+    const EmojiOnClick = (e, emojiObject) => {
+        setComment(comment + emojiObject.emoji);
+    };
 
     // TODO: Likesss
     useEffect(() => {
@@ -188,8 +194,8 @@ const Post = ({ username, userImg, img, caption, id }) => {
             )}
             {/* input box */}
             {session && (
-                <form className="flex items-center p-4">
-                    <EmojiHappyIcon className="h-7" />
+                <form className="flex items-center p-4 ">
+                    <Emoji EmojiOnClick={EmojiOnClick} />
                     <input
                         type="text"
                         value={comment}

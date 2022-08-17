@@ -386,7 +386,6 @@ export const PostinganPopup = () => {
                         </div>
                         <div className="w-full  border-t-[1px]">
                             <form className="flex items-center py-2 px-4">
-                                <EmojiHappyIcon className="h-7" />
                                 <input
                                     type="text"
                                     value={comment}
