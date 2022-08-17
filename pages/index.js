@@ -49,7 +49,7 @@ export default function Home() {
         PostUser();
     }, []);
     return (
-        <div className=" h-screen bg-gray-50 overflow-auto md:mb-0 mb-[5rem]">
+        <div className=" h-screen bg-gray-50 overflow-auto md:mb-0 mb-[3rem]">
             <Head>
                 <title>Instagram - clone</title>
                 <meta
