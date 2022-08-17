@@ -10,7 +10,7 @@ const NavMobile = () => {
     const router = useRouter();
     const { data: session } = useSession();
     return (
-        <div className=" fixed bottom-0 w-full bg-white px-10 py-3 flex justify-between md:hidden">
+        <div className=" fixed bottom-0 w-full bg-white px-10 py-1 flex justify-between md:hidden">
             <div>
                 {" "}
                 <HomeIcon
