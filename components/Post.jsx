@@ -134,7 +134,7 @@ const Post = ({ username, userImg, img, caption, id }) => {
             <img
                 src={img}
                 alt={username}
-                className="object-contain w-full cursor-pointer"
+                className="object-contain w-full cursor-pointer select-none"
                 onClick={(e) => handleLike(e)}
             />
             {/* Button */}
